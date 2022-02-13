@@ -14,6 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const supertest_1 = __importDefault(require("supertest"));
 const index_1 = __importDefault(require("../index"));
+const sharpModule_1 = __importDefault(require("../Modules/sharpModule"));
 const request = (0, supertest_1.default)(index_1.default);
 describe('test image resizer function', () => {
     it('check width and height', () => __awaiter(void 0, void 0, void 0, function* () {
@@ -31,5 +32,8 @@ describe('test image resizer function', () => {
     it('check complete resize and send file successfully', () => __awaiter(void 0, void 0, void 0, function* () {
         const res = yield request.get('/api/images?fname=fjord&width=600&height=400');
         expect(res.files).toBeTrue;
+    }));
+    it('check sharp module', () => __awaiter(void 0, void 0, void 0, function* () {
+        expect((0, sharpModule_1.default)("fjord", 300, 300)).toBeTrue;
     }));
 });

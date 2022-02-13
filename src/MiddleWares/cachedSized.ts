@@ -21,11 +21,11 @@ export default (req: Request, res: Response, next: NextFunction) => {
         return size.height == Number(height) && size.width == Number(width);
     });
     if (findSize) {
-        return res.sendFile(
-            path.resolve(
-                'assets/cachedImg/' + fname + width + 'x' + height + '.jpg'
-            )
-        );
+            return res.sendFile(
+                path.resolve(
+                    'assets/cachedImg/' + fname + width + 'x' + height + '.jpg'
+                )
+            );    
     }
     next();
 };

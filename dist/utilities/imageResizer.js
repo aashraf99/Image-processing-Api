@@ -4,8 +4,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const path_1 = __importDefault(require("path"));
-const sharp_1 = __importDefault(require("sharp"));
-const imageResizer = (req, res) => {
+const sharpModule_1 = __importDefault(require("../Modules/sharpModule"));
+exports.default = (req, res) => {
     const fname = req.query.fname;
     const width = req.query.width;
     const height = req.query.height;
@@ -24,11 +24,10 @@ const imageResizer = (req, res) => {
     else {
         try {
             //used sharp to resize Image and store it in thumb folder
-            (0, sharp_1.default)(path_1.default.resolve('assets/full/' + fname + '.jpg'))
-                .resize({ height: Number(height), width: Number(width) })
-                .toFile(path_1.default.resolve('assets/thumb/' + fname + '_thumb.jpg'))
-                .then(() => {
+            (0, sharpModule_1.default)(fname, Number(height), Number(width)).then(() => {
                 return res.sendFile(path_1.default.resolve('assets/thumb/' + fname + '_thumb.jpg'));
+            }).catch((e) => {
+                res.send("some thing faild in image proccess");
             });
         }
         catch (e) {
@@ -37,4 +36,3 @@ const imageResizer = (req, res) => {
         }
     }
 };
-exports.default = imageResizer;

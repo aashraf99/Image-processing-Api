@@ -1,9 +1,8 @@
 // image resizer function
 import { Response, Request } from 'express';
 import path from 'path';
-import sharp from 'sharp';
-
-const imageResizer = (req: Request, res: Response) => {
+import sharpModule from '../Modules/sharpModule';
+export default (req: Request, res: Response) => {
     const fname: unknown = req.query.fname;
     const width: unknown = req.query.width;
     const height: unknown = req.query.height;
@@ -19,18 +18,18 @@ const imageResizer = (req: Request, res: Response) => {
     } else {
         try {
             //used sharp to resize Image and store it in thumb folder
-            sharp(path.resolve('assets/full/' + fname + '.jpg'))
-                .resize({ height: Number(height), width: Number(width) })
-                .toFile(path.resolve('assets/thumb/' + fname + '_thumb.jpg'))
-                .then(() => {
+            sharpModule(fname as string, Number(height), Number(width)).then(
+                () => {
                     return res.sendFile(
                         path.resolve('assets/thumb/' + fname + '_thumb.jpg')
                     );
-                });
+                }
+            ).catch((e)=>{
+                res.send("some thing faild in image proccess");
+            })
         } catch (e) {
             console.error(e);
             return res.send(e);
         }
     }
 };
-export default imageResizer;

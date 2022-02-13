@@ -1,6 +1,6 @@
 import supertest from 'supertest';
 import app from '../index';
-
+import sharpModule from '../Modules/sharpModule';
 const request = supertest(app);
 
 describe('test image resizer function', () => {
@@ -23,5 +23,8 @@ describe('test image resizer function', () => {
             '/api/images?fname=fjord&width=600&height=400'
         );
         expect(res.files).toBeTrue;
+    });
+    it('check sharp module', async () => {
+        expect(sharpModule("fjord",300,300)).toBeTrue;
     });
 });
