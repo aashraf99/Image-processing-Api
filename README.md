@@ -1,3 +1,4 @@
+to install dependencies run :npm i
 Script needed:
     1- To test the project: npm run test
     2- To start the project: npm run start
