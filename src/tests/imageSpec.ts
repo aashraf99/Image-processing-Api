@@ -25,6 +25,6 @@ describe('test image resizer function', () => {
         expect(res.files).toBeTrue;
     });
     it('check sharp module', async () => {
-        expect(sharpModule("fjord",300,300)).toBeTrue;
+        expect(sharpModule('fjord', 300, 300)).toBeTrue;
     });
 });

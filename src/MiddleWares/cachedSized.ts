@@ -2,30 +2,25 @@
 
 import { NextFunction, Request, Response } from 'express';
 import path from 'path';
-export default (req: Request, res: Response, next: NextFunction) => {
+import sharp from 'sharp';
+import fs from 'fs';
+export default async (req: Request, res: Response, next: NextFunction) => {
     const fname: unknown = req.query.fname;
     const width: unknown = req.query.width;
     const height: unknown = req.query.height;
-    interface size {
-        width: number;
-        height: number;
-    }
-
-    const cached_sized: size[] = [
-        // some sized that normally used
-        { width: 200, height: 200 },
-        { width: 150, height: 150 },
-        { width: 500, height: 500 },
-    ];
-    const findSize: size | undefined = cached_sized.find((size) => {
-        return size.height == Number(height) && size.width == Number(width);
-    });
-    if (findSize) {
+    if (fs.existsSync(path.resolve('assets/thumb/' + fname + '_thumb.jpg'))) {
+        const metadata = await sharp(
+            path.resolve('assets/thumb/' + fname + '_thumb.jpg')
+        ).metadata();
+        if (
+            metadata.height == Number(height) &&
+            metadata.width == Number(width)
+        ) {
             return res.sendFile(
-                path.resolve(
-                    'assets/cachedImg/' + fname + width + 'x' + height + '.jpg'
-                )
-            );    
+                path.resolve('assets/thumb/' + fname + '_thumb.jpg')
+            );
+        }
+        return next();
     }
-    next();
+    return next();
 };

@@ -18,15 +18,16 @@ export default (req: Request, res: Response) => {
     } else {
         try {
             //used sharp to resize Image and store it in thumb folder
-            sharpModule(fname as string, Number(height), Number(width)).then(
-                () => {
+            sharpModule(fname as string, Number(height), Number(width))
+                .then(() => {
                     return res.sendFile(
                         path.resolve('assets/thumb/' + fname + '_thumb.jpg')
                     );
-                }
-            ).catch((e)=>{
-                res.send("some thing faild in image proccess");
-            })
+                })
+                .catch((e) => {
+                    res.send('some thing faild in image proccess');
+                    console.error(e);
+                });
         } catch (e) {
             console.error(e);
             return res.send(e);

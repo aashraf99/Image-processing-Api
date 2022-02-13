@@ -10,6 +10,5 @@ const cachedSized_1 = __importDefault(require("../MiddleWares/cachedSized"));
 const images = express_1.default.Router();
 exports.images = images;
 images.get('/', cachedSized_1.default, (req, res) => {
-    //calling imageResizer function
     return (0, imageResizer_1.default)(req, res);
 });
