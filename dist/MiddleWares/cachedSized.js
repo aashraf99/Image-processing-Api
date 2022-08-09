@@ -21,8 +21,9 @@ exports.default = (req, res, next) => __awaiter(void 0, void 0, void 0, function
     const width = req.query.width;
     const height = req.query.height;
     if (fs_1.default.existsSync(path_1.default.resolve('assets/thumb/' + fname + '_thumb.jpg'))) {
-        let metadata = yield (0, sharp_1.default)(path_1.default.resolve('assets/thumb/' + fname + '_thumb.jpg')).metadata();
-        if (metadata.height == Number(height) && metadata.width == Number(width)) {
+        const metadata = yield (0, sharp_1.default)(path_1.default.resolve('assets/thumb/' + fname + '_thumb.jpg')).metadata();
+        if (metadata.height == Number(height) &&
+            metadata.width == Number(width)) {
             return res.sendFile(path_1.default.resolve('assets/thumb/' + fname + '_thumb.jpg'));
         }
         return next();

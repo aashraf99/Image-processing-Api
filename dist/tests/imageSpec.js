@@ -34,6 +34,6 @@ describe('test image resizer function', () => {
         expect(res.files).toBeTrue;
     }));
     it('check sharp module', () => __awaiter(void 0, void 0, void 0, function* () {
-        expect((0, sharpModule_1.default)("fjord", 300, 300)).toBeTrue;
+        expect((0, sharpModule_1.default)('fjord', 300, 300)).toBeTrue;
     }));
 });

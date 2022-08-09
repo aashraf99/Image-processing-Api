@@ -24,10 +24,13 @@ exports.default = (req, res) => {
     else {
         try {
             //used sharp to resize Image and store it in thumb folder
-            (0, sharpModule_1.default)(fname, Number(height), Number(width)).then(() => {
+            (0, sharpModule_1.default)(fname, Number(height), Number(width))
+                .then(() => {
                 return res.sendFile(path_1.default.resolve('assets/thumb/' + fname + '_thumb.jpg'));
-            }).catch((e) => {
-                res.send("some thing faild in image proccess");
+            })
+                .catch((e) => {
+                res.send('some thing faild in image proccess');
+                console.error(e);
             });
         }
         catch (e) {
